@@ -3,9 +3,6 @@ import {Relation} from "./Relations/Relation";
 import axios from 'axios'
 
 export class Eloquent {
-  _attributes = {}
-  _relations = {}
-
   /**
    * @param attributes
    */
@@ -15,6 +12,8 @@ export class Eloquent {
       errors: {}
     }
 
+    this._attributes = {}
+    this._relations = {}
     this.fill(attributes)
     this.__defineRelations()
   }
