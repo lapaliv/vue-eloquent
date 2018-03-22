@@ -94,10 +94,13 @@ export class Eloquent {
         let relation = this[method]()
         if (relation instanceof Relation) {
           Object.defineProperty(this, method, {
-            get: function () {
+            get: async function () {
               if (!(this._relations[method] instanceof relation.related)) {
-                this._relations[method] = new relation.related()
-                // @todo add find()
+                if (this[relation.attribute]) {
+                  this._relations[method] = await relation.find(this[relation.attribute])
+                } else {
+                  this._relations[method] = new relation.related()
+                }
               }
 
               return this._relations[method]
